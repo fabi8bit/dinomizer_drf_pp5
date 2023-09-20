@@ -16,8 +16,8 @@ class Project(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     project_name = models.CharField(max_length=255)
     content = models.TextField(blank=True)
-    start_date = models.DateTimeField
-    expected_end_date = models.DateTimeField
+    start_date = models.DateTimeField(null=True)
+    expected_end_date = models.DateTimeField(null=True)
     image = models.ImageField(
         upload_to='images/', default='../default_project_img_n5va32', blank=True
     )

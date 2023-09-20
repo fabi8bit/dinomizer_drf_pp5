@@ -29,7 +29,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         # fields = '__all__'
         fields = [
-            'id', 'owner', 'project_name', 'start_date',
-            'expected_end_date', 'updated_at'
+            'id', 'owner', 'profile_id', 'project_name', 'profile_image',
+            'start_date', 'expected_end_date', 'updated_at',
             'content', 'image', 'is_owner', 'status',
         ]
