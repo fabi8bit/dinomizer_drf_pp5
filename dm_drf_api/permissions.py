@@ -9,3 +9,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             
         # Otherwise, we’ll return True only if the  user making the request owns the profile
         return obj.owner == request.user
+

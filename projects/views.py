@@ -5,13 +5,14 @@ from rest_framework.views import APIView
 from .models import Project
 from .serializers import ProjectSerializer
 from dm_drf_api.permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProjectList(APIView):
     serializer_class = ProjectSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    # permission_classes = [
+    #     permissions.IsAuthenticatedOrReadOnly
+    # ]
 
     def get(self, request):
         projects = Project.objects.all()
@@ -35,7 +36,7 @@ class ProjectList(APIView):
 
 
 class ProjectDetail(APIView):
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated & IsOwnerOrReadOnly]
     serializer_class = ProjectSerializer
 
     def get_object(self, pk):

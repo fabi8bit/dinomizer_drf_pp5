@@ -18,7 +18,18 @@ Project Goals
 - Get comments and approvals on your contributions
 
 
+Permissions
+The default permission policy is set globally, using the DEFAULT_PERMISSION_CLASSES setting in settings.py file:
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+
+In order to acces the API the user must be logged in
+In order to take advantage of the CRUD functionality the user must be logged in and be the owner of the object
 
 
 future implementations
