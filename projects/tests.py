@@ -13,8 +13,8 @@ class ProjectListViewTests(APITestCase):
         Project.objects.create(owner=admin, project_name='new project')
         response = self.client.get('/projects/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        print(response.data)
-        print(len(response.data))
+        # print(response.data) here for debugging
+        # print(len(response.data)) here for debugging
 
     def test_logged_in_user_can_create_projects(self):
         self.client.login(username='admin', password='password')
@@ -26,8 +26,8 @@ class ProjectListViewTests(APITestCase):
     def test_logged_out_user_cant_list_projects(self):
         response = self.client.get('/projects/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        print(response.data)
-        print(len(response.data))
+        # print(response.data) here for debugging
+        # print(len(response.data)) here for debugging
 
     def test_logged_out_user_cant_create_projects(self):
         response = self.client.post('/projects/', {'project_name':'title of peppe'})
