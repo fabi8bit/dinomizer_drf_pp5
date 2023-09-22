@@ -21,7 +21,16 @@ class Asset(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_asset_img_dwjzkq', blank=True
     )
-    projects = models.ManyToManyField(Project)
+    project_id = models.ForeignKey(
+        Project, related_name='asset_project', null=True, on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        unique_together = ['asset_name', 'project_id']
+
+    def __str__(self):
+        return f'{self.owner} {self.project_id}'
     
