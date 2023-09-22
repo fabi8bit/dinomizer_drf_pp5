@@ -32,6 +32,14 @@ In order to acces the API the user must be logged in
 In order to take advantage of the CRUD functionality the user must be logged in and be the owner of the object
 
 
+Asset Model (ref: https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_many/)
+An Asset can be used in multiple Project objects, and a Project has multiple Asset objects:
+img asset model
+In order to serialize and deserialize the projects field (many to many) I followed the suggestion at this link: https://stackoverflow.com/questions/33182092/django-rest-framework-serializing-many-to-many-field
+
+
+
+
 future implementations
 - create an Organization that contains projects
 - set a local storage to store original files (large size)
