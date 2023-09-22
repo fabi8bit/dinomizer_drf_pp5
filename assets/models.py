@@ -32,5 +32,5 @@ class Asset(models.Model):
         unique_together = ['asset_name', 'project_id']
 
     def __str__(self):
-        return f'{self.owner} {self.project_id}'
+        return f'{self.asset_name}'
     

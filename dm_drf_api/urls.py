@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('',include('projects.urls')),
     path('',include('participants.urls')),
-    path('',include('assets.urls'))
+    path('',include('assets.urls')),
+    path('',include('comments.urls')),
 ]
