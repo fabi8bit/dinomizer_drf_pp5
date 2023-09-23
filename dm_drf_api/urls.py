@@ -24,4 +24,5 @@ urlpatterns = [
     path('',include('participants.urls')),
     path('',include('assets.urls')),
     path('',include('comments.urls')),
+    path('',include('checks.urls')),
 ]
