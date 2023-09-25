@@ -22,7 +22,7 @@ class Asset(models.Model):
         upload_to='images/', default='../default_asset_img_dwjzkq', blank=True
     )
     project_id = models.ForeignKey(
-        Project, related_name='asset_project', null=True, on_delete=models.CASCADE
+        Project, related_name='asset_project', null=False, on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

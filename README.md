@@ -32,10 +32,11 @@ In order to acces the API the user must be logged in
 In order to take advantage of the CRUD functionality the user must be logged in and be the owner of the object
 
 
-Asset Model (ref: https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_many/)
-An Asset can be used in multiple Project objects, and a Project has multiple Asset objects:
-img asset model
-In order to serialize and deserialize the projects field (many to many) I followed the suggestion at this link: https://stackoverflow.com/questions/33182092/django-rest-framework-serializing-many-to-many-field
+Asset Model
+An Asset is strictly connected to a project via a One to One relation.
+
+Checks Model
+The check is a special function inside the application, that allows a project manager to check a new asset or a new asset's update. If the logged in user is also the project owner of the project associated with the asset, then can give his thumb up with the check.
 
 
 
