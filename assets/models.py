@@ -6,11 +6,11 @@ from projects.models import Project
 class Asset(models.Model):
 
     category_choices = [
-        ('G','Graphic'),
-        ('V','Video'),
-        ('A','Audio'),
-        ('CW','Copywriting'),
-        ('O','Other'),
+        ('graphic','Graphic'),
+        ('video','Video'),
+        ('audio','Audio'),
+        ('copywriting','Copywriting'),
+        ('other','Other'),
     ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
