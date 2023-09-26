@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from projects.models import Project
 from participants.models import Participant
+from django.db.models import Count
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -9,6 +10,13 @@ class ProjectSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     participant_id = serializers.SerializerMethodField()
+    participants = serializers.SerializerMethodField()
+
+    def get_participants(self, obj):
+        # Book.objects.filter(publisher__name="BaloneyPress").count()
+        participants = Participant.objects.filter(
+            project_id=obj.id).count()
+        return participants
 
     def get_participant_id(self, obj):
         user = self.context['request'].user
@@ -42,5 +50,6 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'profile_id', 'project_name', 'profile_image',
             'start_date', 'expected_end_date', 'updated_at',
-            'content', 'image', 'is_owner', 'status', 'participant_id'
+            'content', 'image', 'is_owner', 'status', 'participant_id',
+            'participants',
         ]
