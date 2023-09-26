@@ -6,14 +6,14 @@ from checks.models import Check
 class AssetSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    is_checked = serializers.SerializerMethodField()
+    check_id = serializers.SerializerMethodField()
     
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
 
-    def get_is_checked(self, obj):
+    def get_check_id(self, obj):
         user = self.context['request'].user
         project_id = obj.project_id.id
         project = Project.objects.get(pk=project_id)
@@ -31,5 +31,5 @@ class AssetSerializer(serializers.ModelSerializer):
         model = Asset
         fields = [
             'id', 'owner', 'asset_name', 'category', 'description',
-            'image', 'project_id', 'is_owner', 'is_checked'
+            'image', 'project_id', 'is_owner', 'check_id'
         ]
