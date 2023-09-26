@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from projects.models import Project
+from participants.models import Participant
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -7,6 +8,16 @@ class ProjectSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    participant_id = serializers.SerializerMethodField()
+
+    def get_participant_id(self, obj):
+        user = self.context['request'].user
+        participant = Participant.objects.filter(
+            owner=user,
+            project_id=obj.id
+            ).first()
+        # print(participant)
+        return participant.id if participant else None
 
     def validate_image(self, value):
         if value.size > 2 * 1024 * 1024:
@@ -31,5 +42,5 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'profile_id', 'project_name', 'profile_image',
             'start_date', 'expected_end_date', 'updated_at',
-            'content', 'image', 'is_owner', 'status',
+            'content', 'image', 'is_owner', 'status', 'participant_id'
         ]
