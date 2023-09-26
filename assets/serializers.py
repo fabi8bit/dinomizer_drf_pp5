@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Asset, Project
+from .models import Asset
 from checks.models import Check
 
 
@@ -14,16 +14,12 @@ class AssetSerializer(serializers.ModelSerializer):
         return request.user == obj.owner
 
     def get_check_id(self, obj):
-        user = self.context['request'].user
-        project_id = obj.project_id.id
-        project = Project.objects.get(pk=project_id)
-        if project.owner == user:
-            check = Check.objects.filter(
-                owner=user,
-                asset_id=obj.id
-            ).first()
-            return check.id if check else None
-        return None
+        # user = self.context['request'].user
+        check = Check.objects.filter(
+            asset_id=obj.id
+        ).first()
+        return check.id if check else None
+        
 
         
 
