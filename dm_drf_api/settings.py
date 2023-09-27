@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import re
 from pathlib import Path
 import os
 import dj_database_url
@@ -38,7 +38,7 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     '8000-fabi8bit-dinomizerdrfpp-lj287mt52d5.ws-eu104.gitpod.io',
     '8000-fabi8bit-dinomizerdrfpp-lj287mt52d5.ws-eu105.gitpod.io',
-    'https://dinomizer-api-391f3ee03dea.herokuapp.com/'
+    os.environ.get('ALLOWED_HOST'),
     ]
 
 
