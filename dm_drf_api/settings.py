@@ -49,6 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
 
     'profiles',
     'projects',
@@ -57,6 +64,7 @@ INSTALLED_APPS = [
     'comments',
     'checks',
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -146,5 +154,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
+        
+        'rest_framework.authentication.SessionAuthentication'
+        if 'DEV' in os.environ
+        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )]
+}
+
+REST_USE_JWT = True #To enable token authentication
+JWT_AUTH_SECURE = True #To make sure they’re sent over HTTPS only
+JWT_AUTH_COOKIE = 'my-app-auth' # cookie name for access token
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token' #cookie name for refresh token
+JWT_AUTH_SAMESITE = 'None'
+
+#in order to get profile_id and profile_image in the fields returned when
+#requesting logged in user’s details.
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'dm_drf_api.serializers.CurrentUserSerializer' 
 }
