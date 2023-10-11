@@ -1,5 +1,5 @@
 from django.http import Http404
-from rest_framework import status, permissions, generics
+from rest_framework import status, permissions, generics, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Project
@@ -37,6 +37,12 @@ from rest_framework.permissions import IsAuthenticated
 class ProjectList(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = [
+        'owner__username',
+        'project_name',
+        'content'
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
