@@ -21,6 +21,9 @@ class Asset(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_asset_img_dwjzkq', blank=True
     )
+    assetfile = models.FileField(
+        upload_to='images/', blank=True
+    )
     project_id = models.ForeignKey(
         Project, related_name='asset_project', null=False, on_delete=models.CASCADE
     )

@@ -35,5 +35,5 @@ class AssetSerializer(serializers.ModelSerializer):
         model = Asset
         fields = [
             'id', 'owner', 'asset_name', 'category', 'description',
-            'image', 'created_at', 'updated_at', 'project_id', 'is_owner', 'check_id'
+            'image', 'assetfile','created_at', 'updated_at', 'project_id', 'is_owner', 'check_id'
         ]
