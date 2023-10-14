@@ -32,7 +32,7 @@ class Asset(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        unique_together = ['asset_name', 'project_id']
+        # unique_together = ['asset_name', 'project_id']
 
     def __str__(self):
         return f'{self.asset_name}'
