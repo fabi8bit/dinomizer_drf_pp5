@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import User
 from projects.models import Project
@@ -21,8 +22,9 @@ class Asset(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_asset_img_dwjzkq', blank=True
     )
-    assetfile = models.FileField(
-        upload_to='images/', blank=True
+    assetfile = CloudinaryField(
+        "Asset",
+        resource_type="auto",  # <= Options: image, video, raw, auto
     )
     project_id = models.ForeignKey(
         Project, related_name='asset_project', null=False, on_delete=models.CASCADE
