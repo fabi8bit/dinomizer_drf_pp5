@@ -7,17 +7,17 @@ from projects.models import Project
 class Asset(models.Model):
 
     category_choices = [
-        ('graphic','Graphic'),
-        ('video','Video'),
-        ('audio','Audio'),
-        ('copywriting','Copywriting'),
-        ('other','Other'),
+        ('graphic','graphic'),
+        ('video','video'),
+        ('audio','audio'),
+        ('copywriting','copywriting'),
+        ('other','other'),
     ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     asset_name = models.CharField(max_length=255)
     category = models.CharField(
-        max_length=32, choices=category_choices, default='G')
+        max_length=32, choices=category_choices, default='other')
     description = models.TextField(blank=True)
     image = models.ImageField(
         upload_to='images/', default='../default_asset_img_dwjzkq', blank=True
