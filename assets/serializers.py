@@ -36,6 +36,7 @@ class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
         fields = [
-            'id', 'owner', 'asset_name', 'category', 'description',
-            'image', 'assetfile','created_at', 'updated_at', 'project_id', 'is_owner', 'check_id'
+            'id', 'owner', 'profile_id', 'profile_image','asset_name', 'category', 'description',
+            'image', 'assetfile','created_at', 'updated_at', 'project_id',
+            'is_owner', 'check_id'
         ]
