@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Asset
 from checks.models import Check
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from projects.models import Project
 
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -12,6 +13,7 @@ class AssetSerializer(serializers.ModelSerializer):
     check_id = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
+    project_owner = serializers.SerializerMethodField()
 
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
@@ -29,6 +31,10 @@ class AssetSerializer(serializers.ModelSerializer):
             asset_id=obj.id
         ).first()
         return check.id if check else None
+
+    def get_project_owner(self, obj):
+        request = self.context['request']
+        return request.user == obj.project_id.owner
         
 
         
@@ -36,7 +42,7 @@ class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
         fields = [
-            'id', 'owner', 'profile_id', 'profile_image','asset_name', 'category', 'description',
-            'image', 'assetfile','created_at', 'updated_at', 'project_id',
-            'is_owner', 'check_id'
+            'id', 'owner', 'profile_id', 'profile_image','asset_name',
+            'category', 'description', 'image', 'assetfile','created_at',
+            'updated_at', 'project_id', 'project_owner', 'is_owner', 'check_id'
         ]
