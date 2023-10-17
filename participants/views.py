@@ -1,8 +1,9 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from dm_drf_api.permissions import IsOwnerOrReadOnly
 from .models import Participant
 from .serializers import ParticipantSerializer
 from rest_framework.permissions import IsAuthenticated
+
 
 class ParticipantList(generics.ListCreateAPIView):
     # permission_classes = [
@@ -10,6 +11,11 @@ class ParticipantList(generics.ListCreateAPIView):
     # ]
     serializer_class = ParticipantSerializer
     queryset = Participant.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = [
+        'project_id__id',
+        ]
+
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
