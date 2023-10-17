@@ -9,7 +9,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Participant
-        fields = ['id', 'owner', 'profile_image', 'created_at', 'project_id', 'project_name']
+        fields = ['id', 'owner', 'participant_image', 'created_at', 'project_id', 'project_name']
 
     def create(self, validated_data):
         try:
