@@ -4,11 +4,12 @@ from .models import Participant
 
 class ParticipantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     project_name = serializers.ReadOnlyField(source='project_id.project_name')
 
     class Meta:
         model = Participant
-        fields = ['id', 'owner', 'created_at', 'project_id', 'project_name']
+        fields = ['id', 'owner', 'profile_image', 'created_at', 'project_id', 'project_name']
 
     def create(self, validated_data):
         try:
