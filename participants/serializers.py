@@ -4,7 +4,7 @@ from .models import Participant
 
 class ParticipantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    participant_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     project_name = serializers.ReadOnlyField(source='project_id.project_name')
 
     class Meta:
