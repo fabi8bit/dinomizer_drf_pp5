@@ -28,6 +28,8 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
       - [Asset](#--event--)
       - [Participant](#--notification--)
       - [Checks](#--contact--)
+
+  * [Permissions](#permissions)
   
   * [Frameworks, libraries and dependencies](#frameworks--libraries-and-dependencies)
     + [django-cloudinary-storage](#django-cloudinary-storage)
@@ -37,17 +39,18 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
     + [psychopg2](#psychopg2)
     + [django-cors-headers](#django-cors-headers)
   * [Testing](#testing)
-    + [Manual testing](#manual-testing)
     + [Automated tests](#automated-tests)
-    + [Python validation](#python-validation)
-    + [Bugs and Issues](#resolved-bugs)
+    + [Manual testing](#manual-testing)
+    
+  * [Python validation](#python-validation)
+  * [Bugs and Issues](#resolved-bugs)
   * [Deployment](#deployment)
   * [Credits](#credits)
 
 ## Planning and ideas
 Dinomizer is based on the walkthrough project of the Code Institute Frontend module. The idea comes from my background experience in video production and comunication. I've immagined a comunication agency where all the members working on the same comunication project are dispersed in different physical places. They need to be on the same page and share all the contents they are working on. Dinomizer is the platform where they can share files, assets and ideas to carry out projects.
 As a first step for the planning I streamlined all the project goals and tried to immagine all the possible user stories for the frontend application. Those are described in details in the [README](https://github.com/fabi8bit/dinomizer_react_pp5/blob/main/README.md) of the frontend application.
-In order to support the user stories, and therefore the functionality of the application, I started to lay down the API endpoints.
+In order to support the user stories, and therefore the functionality of the application, I started to lay down the API endpoints and data models.
 
 ## API Endpoints
 
@@ -92,28 +95,82 @@ In order to support the user stories, and therefore the functionality of the app
 | Comments     | /comments     |                                                                                                                                                                                                            | list/GET       |                                                                                     | N/A                                                                                                                                                                                                                                                                                                                                    | NO  |                                                                                                                                                                                                                                                                                                                                                      |
 
 
-Permissions
-The default permission policy is set globally, using the DEFAULT_PERMISSION_CLASSES setting in settings.py file:
 
+
+
+## Data Models
+
+Here following are listed the models that support the API endpoints:
+
+![Bidepp Banner](readme_assets/db_diagram/database-diagram-dinomizer.png)
+
+The picture represent the diagram as it was planned at the beginning. During the development some parts have been modified or not implemented. Tasks and comments are not present in the final version of this project.
+This diagram was designed using [drawSQL](https://drawsql.app/) and here is the link to my [Dinomizer db diagram](https://drawsql.app/teams/fabi8steam/diagrams/dinomizer). 
+
+### Profile
+A profile is authomatically crated upon user creation when signing up. Profile has a One-to-One relationship with User. It includes is_owner field (boolean) which is used to check the permission when a user wants to edit a profile. The owner of the profile can edit his real name and change the profile image.
+
+### Project
+The project model has a many-to-one relationship with User. It means that a user can create multiple projects. The owner field is used to give permission for the editing operations. The image field accepts only images and it will be used as cover image for that project. Start_date and expected_end_date are present for future development (Please refer to the section [Future implementation]((https://github.com/fabi8bit/dinomizer_react_pp5/blob/main/README.md)) in the frontend README file).
+
+### Asset
+The asset model has a many-to-one relationship with project. An asset can only be related to one project. It features an image field, used for the cover image, and an assetfield which is a Cloudinaryfield and it's used to for the real asset file. It accepts Images, Videos, Audio, and .txt files.
+During the development I was able to upload only images, while the rest of the file types where rejected. I had to relay on the Code Institute assistence to fix the issue. The problem was on the type of field I choose on the first instance. So I changed from filefield to CloudinaryField ([commit 79ce858](https://github.com/fabi8bit/dinomizer_drf_pp5/commit/79ce858321f0b2cc2654c2f977a6952de150bac9))
+
+### Participant
+Participant model is related to 'owner' and 'project_id'. 'owner' is a User that joins a Project. 'Project_id' is a Project that is fed by 'owner'.'unique_together' makes sure that a user can't 'double follow' the same project.
+
+### Checks
+The check is a special function inside the application, that allows a project manager (project_owner) to check a new asset or a new asset's update. It can be assimilated to the "like" found on social media platforms. The logic behind it's the same. The difference is on the permissions. If the logged in user is also the project owner of the project associated with the asset, then can give his thumb up with a check.
+Cheks model has a very important role in the Dinomizer ecosystem.  This operation is restricted both on the backend and frontend. The restrictions are achieved thanks to a custom permission I created for this scope. The code that regulates this permission can be found in permission.py under dm_drf_api directory.
+
+
+## Permissions
+
+The default permission policy is set globally, using the DEFAULT_PERMISSION_CLASSES setting in settings.py file:
+```
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
+```
 
+In order to acces the API and take advantage of the CRUD operations, the user must be logged in.
 
-In order to acces the API the user must be logged in
-In order to take advantage of the CRUD functionality the user must be logged in and be the owner of the object
+## Frameworks, libraries and dependencies
+Dinomizer API is developed using [Django](https://www.djangoproject.com) and [Django Rest Framework](https://django-filter.readthedocs.io/en/stable/).
+Django is a framework of Python.
 
+The following libraries were also used:
 
-Asset Model
-An Asset is strictly connected to a project via a One to One relation.
+### django-cloudinary-storage
+https://pypi.org/project/django-cloudinary-storage/
 
-Checks Model
-The check is a special function inside the application, that allows a project manager to check a new asset or a new asset's update. If the logged in user is also the project owner of the project associated with the asset, then can give his thumb up with the check.
+### dj-rest-auth
+https://dj-rest-auth.readthedocs.io/en/latest/introduction.html
 
+dj-rest-auth is a set of REST API endpoints to handle User Registration and Authentication tasks.
 
-At the moment the option to delete profiles is not implemented due to time constraints
+### djangorestframework-simplejwt
+https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+
+Simple JWT provides a JSON Web Token authentication backend for the Django REST Framework.
+
+### dj-database-url
+https://pypi.org/project/dj-database-url/
+
+### psychopg2
+https://pypi.org/project/psycopg2/
+
+Enables the interaction between Python and the PostgreSQL database.
+
+### django-cors-headers
+https://pypi.org/project/django-cors-headers/
+
+A Django App that adds Cross-Origin Resource Sharing (CORS) headers to responses. This allows in-browser requests to your Django application from other origins.
+
+## Testing
 
 future implementations
 - create an Organization that contains projects
