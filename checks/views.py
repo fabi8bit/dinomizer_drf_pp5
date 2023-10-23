@@ -26,13 +26,13 @@ class CheckList(APIView):
     def get(self, request):
         checks = Check.objects.all()
         serializer = CheckSerializer(
-            checks, many=True, context={'request':request}
+            checks, many=True, context={'request': request}
         )
         return Response(serializer.data)
 
     def post(self, request):
         serializer = CheckSerializer(
-            data=request.data, context={'request':request}
+            data=request.data, context={'request': request}
         )
         if serializer.is_valid():
             asset_id = request.data['asset_id']
@@ -49,7 +49,7 @@ class CheckList(APIView):
         return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST
             )
-        
+
 
 class CheckDetail(generics.RetrieveDestroyAPIView):
     permission_classes = [IsProjectOwner]

@@ -16,7 +16,6 @@ class ParticipantList(generics.ListCreateAPIView):
         'project_id__id',
         ]
 
-
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 

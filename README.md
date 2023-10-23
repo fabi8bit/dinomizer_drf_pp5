@@ -41,9 +41,8 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
   * [Testing](#testing)
     + [Automated tests](#automated-tests)
     + [Manual testing](#manual-testing)
-    
-  * [Python validation](#python-validation)
   * [Bugs and Issues](#resolved-bugs)
+  * [Python validation](#python-validation)
   * [Deployment](#deployment)
   * [Credits](#credits)
 
@@ -172,14 +171,148 @@ A Django App that adds Cross-Origin Resource Sharing (CORS) headers to responses
 
 ## Testing
 
-future implementations
-- create an Organization that contains projects
-- set a local storage to store original files (large size)
-- create authomatic lowres file to display inside the app
-- evaluate team capacity
-- diagram that displays how busy a user is so as a project manager I can decide to whom assign a task
-- side navbar for a more appealing user experience
+### Automated Test
+A total of 22 unit test were carried out on the following apps: Projects, Participants, Assets, and Checks. They all reported on the following chart:
+| Application  | Test                                                                                      | Type | Results | File                  | Class                      | Note                                                                                                                    |
+| ------------ | ----------------------------------------------------------------------------------------- | ---- | ------- | --------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| PROJECTS     | Logged In User can list all the projects                                                  | auto | pass    | projects/tests.py     | ProjectListViewTests       |                                                                                                                         |
+| PROJECTS     | Logged In User can create a project                                                       | auto | pass    | projects/tests.py     | ProjectListViewTests       |                                                                                                                         |
+| PROJECTS     | Logged Out User can't see the projects list                                               | auto | pass    | projects/tests.py     | ProjectListViewTests       |                                                                                                                         |
+| PROJECTS     | Logged Out User can't create projects                                                     | auto | pass    | projects/tests.py     | ProjectListViewTests       |                                                                                                                         |
+| PROJECTS     | Logged In User can retrieve a project with a valid id                                     | auto | pass    | projects/tests.py     | ProjectDetailViewTests     |                                                                                                                         |
+| PROJECTS     | Logged Out User can't retrieve a project with a valid id                                  | auto | pass    | projects/tests.py     | ProjectDetailViewTests     |                                                                                                                         |
+| PROJECTS     | Logged In User can't retrieve a project with a invalid id                                 | auto | pass    | projects/tests.py     | ProjectDetailViewTests     |                                                                                                                         |
+| PROJECTS     | Logged In User can update a project they own                                              | auto | pass    | projects/tests.py     | ProjectDetailViewTests     |                                                                                                                         |
+| PROJECTS     | Logged In User can't update a project they don't own                                      | auto | pass    | projects/tests.py     | ProjectDetailViewTests     |                                                                                                                         |
+| PARTICIPANTS | Logged In User can see the list of all participants                                       | auto | pass    | participants/tests.py | ParticipantListViewTests   |                                                                                                                         |
+| PARTICIPANTS | Logged In User can participate to a project                                               | auto | pass    | participants/tests.py | ParticipantListViewTests   |                                                                                                                         |
+| PARTICIPANTS | Logged In User can't participate to a project two times                                   | auto | pass    | participants/tests.py | ParticipantListViewTests   |                                                                                                                         |
+| PARTICIPANTS | Logged Out User can't see the list of participants                                        | auto | pass    | participants/tests.py | ParticipantListViewTests   |                                                                                                                         |
+| PARTICIPANTS | Logged In User and Owner of participation can cancel the participation to a project       | auto | pass    | participants/tests.py | ParticipantDetailViewTests |                                                                                                                         |
+| PARTICIPANTS | Logged In User and Not Owner of participation can't cancel the participation to a project | auto | pass    | participants/tests.py | ParticipantDetailViewTests |                                                                                                                         |
+| PARTICIPANTS | Logged In User can retrieve the detail of a participation                                 | auto | pass    | participants/tests.py | ParticipantDetailViewTests |                                                                                                                         |
+| ASSETS       | Logged in User can list assets                                                            | auto | pass    | assets/tests.py       | AssetListViewTests         |                                                                                                                         |
+| ASSETS       | Logged out User can't create assets                                                       | auto | pass    | assets/tests.py       | AssetListViewTests         |                                                                                                                         |
+| ASSETS       | Logged in user can see asset detail                                                       | auto | pass    | assets/tests.py       | AssetDetailViewTests       |                                                                                                                         |
+| ASSETS       | Logged In User and Owner of Assets can delete his own Assets                              | auto | pass    | assets/tests.py       | AssetDetailViewTests       |                                                                                                                         |
+| ASSETS       | Logged In User and Not Owner of Assets can't delete someone elses Assets                  | auto | pass    | assets/tests.py       | AssetDetailViewTests       |                                                                                                                         |
+| CHECKS       | Logged In User and Project Owner can check assets related to his own project              | auto | pass    | checks/tests.py       | CheckDetailViewTests       | Check is a special feature, that allow the project manager to give a thumbup on a new uploaded asset or on a new update |
+| CHECKS       | Logged In User and Not Project Owner can't check assets                                   | auto | pass    | checks/tests.py       | CheckDetailViewTests       |
+
+### Manual Testing
+
+Each end point were manually tested using the Django Rest Framework HTML interface.They did not show any relevant issue during the backend development. Although during the frontend development some changes were necessary:
+
+During the planning of the application I decided to skip the search feature for projects. It was only during the coding of the project page that I had the need to implement the search function also for projects in order to have a better user experience.
+So I had to go back and implement this feature in the backend project (commit d5f3dae https://github.com/fabi8bit/dinomizer_drf_pp5/commit/d5f3dae0e09241c17670ea45e4f573d8e00b6237)
+
+After creating the Asset form I realized I made a mistake defining the fields in the model, on the backend side. One of the feature of the application is that you can upload as assetfile multi type of media like, images, video, and .txt files. At that point my code was able to upload just images. Thanks to the support at code institute I managed to resolve the issue. Sean helped me for more than an hour trying to discover and fix the issue. He discovered also other issues I had with the useState in the frontend and finally landed on the solution. The field type on the Asset model had to be change to Cloudinary field. That resolved the issue and the user is now able to upload images, videos and .txt files.
+
+After I started to build the Asset form I had the need to include the profile_id, profile_image, and project_owner fields for the Assets. The same happened for the participants end points, where I had to include participants_id and participant_image. So I went back to the backend project and iclude them in the Api. It was more convenient to add those fields in the API than make tons of request to the server from the frontend.
+
+All the time I went back to drf project I made sure to activate the string in the env.py file to activate the ENV variable. That way I had the Django view activated, so it was easy to check the changes I made. After checking the code was working as expected, I commented out the ENV variable, saved, add the changes to git, commited, pushed to github and redeployed to Heroku.
 
 
-side navbar
-https://www.youtube.com/watch?v=IathdVB65Lw&t=217s
+## Bugs
+
+Projects and Assets list: Filtering is not implemented in the API. The filtering happens in the frontend using to the filter method. This cause some issues like continously display the loader animation when the filtering doesn't match the filtering criteria. This issue will be solved in the future implementing the filtering in the API.
+
+Projects and Assets edit form: reselecting cover immage and assetfile(only for asset) is necessary. Without doing so the field remains empty and an Alert Message is rendered to the user. In the backend everything works as expected and this issue is only present in the frontend.
+
+## Python validation
+[Code Institute Python Linter](https://pep8ci.herokuapp.com/) was used to validate the python
+
+| App          | File           | Result                     |
+| ------------ | -------------- | -------------------------- |
+| assets       | models.py      | All clear, no errors found |
+| assets       | serializers.py | All clear, no errors found |
+| assets       | tests.py       | All clear, no errors found |
+| assets       | urls.py        | All clear, no errors found |
+| assets       | views.py       | All clear, no errors found |
+| checks       | models.py      | All clear, no errors found |
+| checks       | serializers.py | All clear, no errors found |
+| checks       | tests.py       | All clear, no errors found |
+| checks       | urls.py        | All clear, no errors found |
+| checks       | views.py       | All clear, no errors found |
+| comments     | models.py      | All clear, no errors found |
+| comments     | serializers.py | All clear, no errors found |
+| comments     | urls.py        | All clear, no errors found |
+| comments     | views.py       | All clear, no errors found |
+| dm_drf_api   | permissions.py | All clear, no errors found |
+| dm_drf_api   | serializers.py | All clear, no errors found |
+| dm_drf_api   | settings.py    | All clear, no errors found |
+| dm_drf_api   | urls.py        | All clear, no errors found |
+| participants | models.py      | All clear, no errors found |
+| participants | serializers.py | All clear, no errors found |
+| participants | tests.py       | All clear, no errors found |
+| participants | urls.py        | All clear, no errors found |
+| participants | views.py       | All clear, no errors found |
+| profiles     | models.py      | All clear, no errors found |
+| profiles     | serializers.py | All clear, no errors found |
+| profiles     | urls.py        | All clear, no errors found |
+| profiles     | views.py       | All clear, no errors found |
+| projects     | models.py      | All clear, no errors found |
+| projects     | serializers.py | All clear, no errors found |
+| projects     | tests.py       | All clear, no errors found |
+| projects     | urls.py        | All clear, no errors found |
+| projects     | views.py       | All clear, no errors found |
+
+
+## Deployment
+
+Cloud platform: [Heroku](https://www.heroku.com/home)
+
+Media platform for image storage: [Cloudinary](https://cloudinary.com/)
+
+Database type: Postgres
+
+Database service used: [ElephantSQL](https://www.elephantsql.com/)
+
+- Clone/Fork this repository
+- [Cloudinary](https://cloudinary.com/)
+  * log-in
+  * From the dashboard copy the **API Environment variable**
+  (make sure it starts with `cloudinary://`)
+
+- [ElephantSQL](https://www.elephantsql.com/)
+  * Log In
+  * Create new instance
+  * Select Tiny Turtle plan (Free)
+  * Select the closest region
+  * Click review
+  * Head to ElephantSQL dashboard and copy the URL for your database (make sure it starts with `postgres://`)
+  * 
+- [Heroku](https://www.heroku.com/home)
+  * Log In
+  * Select **Create new app**
+  * Enter a unique name for your app
+  * Select your region from the dropdown
+  * Create App
+  * Settings Tab:
+    * Click on **reveal config vars**
+      - Enter the following config var names and values:
+      - `CLOUDINARY_URL`: *your cloudinary URL as obtained above*
+      - `DATABASE_URL`: *your ElephantSQL postgres database URL as obtained above*
+      - `SECRET_KEY`: *your secret key*
+      - `ALLOWED_HOST`: *the url of your Heroku app (but without the `https://` prefix)*
+  * Deploy Tab:
+    * Choose deploy using GitHub
+    * On the search box look for your repository
+    * Connect with your repository
+    * Choose Manual or Automatic deploy
+    * Select from *main* branch
+
+  On the log window the deploying messages start to appear, and when finished you can click on the button *Open App*
+
+## Credits
+
+I heavily relayed on the walkthrough project lessons and that was mostly what i used.
+Although the following resources were used
+
+- How to test the Asset list in automated test is [how to test a model that has a foreign key in django](https://stackoverflow.com/questions/44604686/how-to-test-a-model-that-has-a-foreign-key-in-django)
+
+- [Django Rest Framework documentation](https://www.django-rest-framework.org/)
+
+- [Django Documentation](https://www.djangoproject.com/)
+
+

@@ -63,13 +63,13 @@ class ProjectDetail(APIView):
     def get(self, request, pk):
         projects = self.get_object(pk)
         serializer = ProjectSerializer(
-            projects, context={'request':request})
+            projects, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         projects = self.get_object(pk)
         serializer = ProjectSerializer(
-            projects, data=request.data, context={'request':request})
+            projects, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

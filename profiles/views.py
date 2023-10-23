@@ -6,17 +6,19 @@ from django.http import Http404
 from rest_framework import status
 from dm_drf_api.permissions import IsOwnerOrReadOnly
 
+
 class ProfileList(APIView):
     def get(self, request):
         profiles = Profile.objects.all()
         serializer = ProfileSerializer(
-            profiles, many=True, context={'request':request})
+            profiles, many=True, context={'request': request})
         return Response(serializer.data)
 
 
 class ProfileDetail(APIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
     def get_object(self, pk):
         try:
             profile = Profile.objects.get(pk=pk)
@@ -28,13 +30,13 @@ class ProfileDetail(APIView):
     def get(self, request, pk):
         profiles = self.get_object(pk)
         serializer = ProfileSerializer(
-            profiles, context={'request':request})
+            profiles, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         profiles = self.get_object(pk)
         serializer = ProfileSerializer(
-            profiles, data=request.data, context={'request':request})
+            profiles, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

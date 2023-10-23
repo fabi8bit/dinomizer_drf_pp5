@@ -8,7 +8,8 @@ class Participant(models.Model):
     Participant model, related to 'owner' and 'project_id'.
     'owner' is a User that participates on a Project.
     'Project_id' is a Project that is fed by 'owner'.
-    'unique_together' makes sure a user can't 'double follow' the same project.
+    'unique_together' makes sure a user can't 'double join'
+    'the same project.
     """
     owner = models.ForeignKey(
         User, related_name='participant', on_delete=models.CASCADE

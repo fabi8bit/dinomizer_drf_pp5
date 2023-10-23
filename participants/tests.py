@@ -7,7 +7,6 @@ from rest_framework.test import APITestCase
 class ParticipantListViewTests(APITestCase):
     def setUp(self):
         User.objects.create_user(username='admin', password='password')
-        
 
     def test_can_list_participants(self):
         self.client.login(username='admin', password='password')
@@ -20,7 +19,7 @@ class ParticipantListViewTests(APITestCase):
         self.client.login(username='admin', password='password')
         admin = User.objects.get(username='admin')
         Project.objects.create(owner=admin, project_name='new project')
-        response = self.client.post('/participants/', {'project_id':1})
+        response = self.client.post('/participants/', {'project_id': 1})
         count = Participant.objects.count()
         self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -29,13 +28,13 @@ class ParticipantListViewTests(APITestCase):
         self.client.login(username='admin', password='password')
         admin = User.objects.get(username='admin')
         Project.objects.create(owner=admin, project_name='new project')
-        self.client.post('/participants/', {'project_id':1})
-        response = self.client.post('/participants/', {'project_id':1})
+        self.client.post('/participants/', {'project_id': 1})
+        response = self.client.post('/participants/', {'project_id': 1})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_logged_out_user_cant_retrieve_list_of_participants(self):
         response = self.client.get('/participants/')
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)        
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 class ParticipantDetailViewTests(APITestCase):
@@ -48,11 +47,11 @@ class ParticipantDetailViewTests(APITestCase):
             content='admins content'
         )
         self.client.login(username='fabio', password='pass')
-        self.client.post('/participants/', {'project_id':1})
-    
+        self.client.post('/participants/', {'project_id': 1})
+
     def test_logged_in_user_and_owner_can_delete_participation(self):
         self.client.login(username='admin', password='pass')
-        self.client.post('/participants/', {'project_id':2})
+        self.client.post('/participants/', {'project_id': 2})
         self.client.delete('/participants/2/')
         response = self.client.get('/participants/2/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

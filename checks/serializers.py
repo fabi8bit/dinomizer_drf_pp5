@@ -4,7 +4,7 @@ from .models import Check
 
 class CheckSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    
+
     class Meta:
         model = Check
         fields = ['id', 'created_at', 'owner', 'asset_id']

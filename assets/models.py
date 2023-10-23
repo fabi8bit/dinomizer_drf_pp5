@@ -7,11 +7,11 @@ from projects.models import Project
 class Asset(models.Model):
 
     category_choices = [
-        ('graphic','graphic'),
-        ('video','video'),
-        ('audio','audio'),
-        ('copywriting','copywriting'),
-        ('other','other'),
+        ('graphic', 'graphic'),
+        ('video', 'video'),
+        ('audio', 'audio'),
+        ('copywriting', 'copywriting'),
+        ('other', 'other'),
     ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -27,15 +27,16 @@ class Asset(models.Model):
         resource_type="auto",  # <= Options: image, video, raw, auto
     )
     project_id = models.ForeignKey(
-        Project, related_name='asset_project', null=False, on_delete=models.CASCADE
+        Project,
+        related_name='asset_project',
+        null=False,
+        on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-created_at']
-        # unique_together = ['asset_name', 'project_id']
 
     def __str__(self):
         return f'{self.asset_name}'
-    

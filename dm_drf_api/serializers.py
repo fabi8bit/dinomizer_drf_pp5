@@ -1,9 +1,3 @@
-# Create this serializer in order to add the profile_id  and profile_image to fields returned when  
-# requesting logged in user’s details. we’ll know which profile to  
-# link to and what image to show in the  navigation bar for a logged in user.
-# we need then to overwrite the default USER_DETAILS_SERIALIZER in settings.py.
-
-
 from dj_rest_auth.serializers import UserDetailsSerializer
 from rest_framework import serializers
 

@@ -20,7 +20,7 @@ class AssetSerializer(serializers.ModelSerializer):
 
     def get_updated_at(self, obj):
         return naturaltime(obj.created_at)
-    
+
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
@@ -35,14 +35,11 @@ class AssetSerializer(serializers.ModelSerializer):
     def get_project_owner(self, obj):
         request = self.context['request']
         return request.user == obj.project_id.owner
-        
-
-        
 
     class Meta:
         model = Asset
         fields = [
-            'id', 'owner', 'profile_id', 'profile_image','asset_name',
-            'category', 'description', 'image', 'assetfile','created_at',
+            'id', 'owner', 'profile_id', 'profile_image', 'asset_name',
+            'category', 'description', 'image', 'assetfile', 'created_at',
             'updated_at', 'project_id', 'project_owner', 'is_owner', 'check_id'
         ]

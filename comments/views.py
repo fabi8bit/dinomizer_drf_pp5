@@ -4,6 +4,7 @@ from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 from rest_framework.permissions import IsAuthenticated
 
+
 class CommentList(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()

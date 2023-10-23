@@ -86,13 +86,15 @@ MIDDLEWARE = [
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-    os.environ.get('CLIENT_ORIGIN'),
-    os.environ.get('CLIENT_ORIGIN_DEV')
-]
+        os.environ.get('CLIENT_ORIGIN'),
+        os.environ.get('CLIENT_ORIGIN_DEV')
+    ]
 
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
-    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    extracted_url = re.match(
+        r'^.+-',
+        os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]
@@ -149,16 +151,28 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+            ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+            ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+            ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+            ),
     },
 ]
 
@@ -192,31 +206,30 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [(
-        
+
         'rest_framework.authentication.SessionAuthentication'
         if 'DEV' in os.environ
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     )],
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE':10,
+        'PAGE_SIZE': 10,
         'DATETIME_FORMAT': '%d %b %Y',
 }
 
 if 'DEV' not in os.environ:
-    REST_FRAMEWORK ['DEFAULT_RENDERER_CLASSES'] = [
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
         'rest_framework.renderers.JSONRenderer',
     ]
 
-REST_USE_JWT = True #To enable token authentication
-JWT_AUTH_SECURE = True #To make sure they’re sent over HTTPS only
-JWT_AUTH_COOKIE = 'my-app-auth' # cookie name for access token
-JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token' #cookie name for refresh token
+REST_USE_JWT = True  # To enable token authentication
+JWT_AUTH_SECURE = True  # To make sure they’re sent over HTTPS only
+JWT_AUTH_COOKIE = 'my-app-auth'  # cookie name for access token
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'  # cookie name for refresh token
 JWT_AUTH_SAMESITE = 'None'
 
-#in order to get profile_id and profile_image in the fields returned when
-#requesting logged in user’s details.
+# in order to get profile_id and profile_image in the fields returned when
+# requesting logged in user’s details.
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'dm_drf_api.serializers.CurrentUserSerializer' 
+    'USER_DETAILS_SERIALIZER': 'dm_drf_api.serializers.CurrentUserSerializer'
 }
-
