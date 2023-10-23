@@ -1,4 +1,4 @@
-![Dinomizer-logo](readme_assets/logos/dm-logo-navbar.svg)
+![Dinomizer-logo](readme_assets/logos/dm-banner-logo.png)
 
 ***
 
