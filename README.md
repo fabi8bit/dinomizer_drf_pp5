@@ -43,6 +43,7 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
   * [Python validation](#python-validation)
   * [Deployment](#deployment)
   * [Credits](#credits)
+  * [Notes](#notes)
 
 ## Planning and ideas
 Dinomizer is based on the walkthrough project of the Code Institute Frontend module. The idea comes from my background experience in video production and comunication. I've immagined a comunication agency where all the members working on the same comunication project are dispersed in different physical places. They need to be on the same page and share all the contents they are working on. Dinomizer is the platform where they can share files, assets and ideas to carry out projects.
@@ -112,7 +113,7 @@ The project model has a many-to-one relationship with User. It means that a user
 
 ### Asset
 The asset model has a many-to-one relationship with project. An asset can only be related to one project. It features an image field, used for the cover image, and an assetfield which is a Cloudinaryfield and it's used to for the real asset file. It accepts Images, Videos, Audio, and .txt files.
-During the development I was able to upload only images, while the rest of the file types where rejected. I had to relay on the Code Institute assistence to fix the issue. The problem was on the type of field I choose on the first instance. So I changed from filefield to CloudinaryField ([commit 79ce858](https://github.com/fabi8bit/dinomizer_drf_pp5/commit/79ce858321f0b2cc2654c2f977a6952de150bac9))
+During the development I was able to upload only images, while the rest of the file types where rejected. I had to relay on the Code Institute assistence to fix the issue. The problem was on the type of field I choose on the first instance. So I changed from FileField to CloudinaryField ([commit 79ce858](https://github.com/fabi8bit/dinomizer_drf_pp5/commit/79ce858321f0b2cc2654c2f977a6952de150bac9))
 
 ### Participant
 Participant model is related to 'owner' and 'project_id'. 'owner' is a User that joins a Project. 'Project_id' is a Project that is fed by 'owner'.'unique_together' makes sure that a user can't 'double join' the same project.
@@ -310,5 +311,8 @@ I heavily relayed on the walkthrough project lessons. Although the following res
 - [Django Rest Framework documentation](https://www.django-rest-framework.org/)
 
 - [Django Documentation](https://www.djangoproject.com/)
+
+## Notes
+All the charts present in this document are available as a spreadsheet at [this link](https://docs.google.com/spreadsheets/d/1dO9Zj2uhU90JMJT0_W85nkQjaKAbOLGk1Hr0KajRhKQ/edit#gid=1413378052)
 
 
