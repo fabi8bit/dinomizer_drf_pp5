@@ -1,8 +1,6 @@
-# DINOMIZER
+![Dinomizer-logo](readme_assets/logos/dm-logo-navbar.svg)
 
-(foto)
-
-nota foto
+***
 
 Dinomizer is built using Django Rest Framework for the backend and React JS for the frontend. This project was created as my fifth portfolio project for my Diploma in Web Application Development at Code Institute.
 
@@ -17,7 +15,7 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
 - Get approvals by the project manager (project owner) on the assets uploaded
 
 ## Table of contents
-- [Dinomizer](#dinomizer)
+- [Dinomizer](#Dinomizer-logo)
   * [Project goals](#project-goals)
   * [Table of contents](#table-of-contents)
   * [Planning and ideas](#planning)
@@ -117,11 +115,11 @@ The asset model has a many-to-one relationship with project. An asset can only b
 During the development I was able to upload only images, while the rest of the file types where rejected. I had to relay on the Code Institute assistence to fix the issue. The problem was on the type of field I choose on the first instance. So I changed from filefield to CloudinaryField ([commit 79ce858](https://github.com/fabi8bit/dinomizer_drf_pp5/commit/79ce858321f0b2cc2654c2f977a6952de150bac9))
 
 ### Participant
-Participant model is related to 'owner' and 'project_id'. 'owner' is a User that joins a Project. 'Project_id' is a Project that is fed by 'owner'.'unique_together' makes sure that a user can't 'double follow' the same project.
+Participant model is related to 'owner' and 'project_id'. 'owner' is a User that joins a Project. 'Project_id' is a Project that is fed by 'owner'.'unique_together' makes sure that a user can't 'double join' the same project.
 
 ### Checks
 The check is a special function inside the application, that allows a project manager (project_owner) to check a new asset or a new asset's update. It can be assimilated to the "like" found on social media platforms. The logic behind it's the same. The difference is on the permissions. If the logged in user is also the project owner of the project associated with the asset, then can give his thumb up with a check.
-Cheks model has a very important role in the Dinomizer ecosystem.  This operation is restricted both on the backend and frontend. The restrictions are achieved thanks to a custom permission I created for this scope. The code that regulates this permission can be found in permission.py under dm_drf_api directory.
+Cheks model has a very important role in the Dinomizer ecosystem.  This operation is restricted both on the backend and frontend. The restrictions are achieved thanks to a custom permission I created for this scope. The code that regulates this permission can be found in permissions.py under dm_drf_api directory.
 
 
 ## Permissions
@@ -172,7 +170,7 @@ A Django App that adds Cross-Origin Resource Sharing (CORS) headers to responses
 ## Testing
 
 ### Automated Test
-A total of 22 unit test were carried out on the following apps: Projects, Participants, Assets, and Checks. They all reported on the following chart:
+A total of 22 unit test were carried out on the following apps: Projects, Participants, Assets, and Checks. They are all reported on the following chart:
 | Application  | Test                                                                                      | Type | Results | File                  | Class                      | Note                                                                                                                    |
 | ------------ | ----------------------------------------------------------------------------------------- | ---- | ------- | --------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | PROJECTS     | Logged In User can list all the projects                                                  | auto | pass    | projects/tests.py     | ProjectListViewTests       |                                                                                                                         |
@@ -201,19 +199,18 @@ A total of 22 unit test were carried out on the following apps: Projects, Partic
 
 ### Manual Testing
 
-Each end point were manually tested using the Django Rest Framework HTML interface.They did not show any relevant issue during the backend development. Although during the frontend development some changes were necessary:
+Each API end point were manually tested using the Django Rest Framework HTML interface.They did not show any relevant issue during the backend development. Although during the frontend development some changes were necessary.
 
-During the planning of the application I decided to skip the search feature for projects. It was only during the coding of the project page that I had the need to implement the search function also for projects in order to have a better user experience.
+## Bugs
+
+During the planning of the application I decided to skip the search feature for projects. It was only during the coding of the project page on the frontend, that I had the need to implement the search function also for projects in order to have a better user experience.
 So I had to go back and implement this feature in the backend project (commit d5f3dae https://github.com/fabi8bit/dinomizer_drf_pp5/commit/d5f3dae0e09241c17670ea45e4f573d8e00b6237)
 
-After creating the Asset form I realized I made a mistake defining the fields in the model, on the backend side. One of the feature of the application is that you can upload as assetfile multi type of media like, images, video, and .txt files. At that point my code was able to upload just images. Thanks to the support at code institute I managed to resolve the issue. Sean helped me for more than an hour trying to discover and fix the issue. He discovered also other issues I had with the useState in the frontend and finally landed on the solution. The field type on the Asset model had to be change to Cloudinary field. That resolved the issue and the user is now able to upload images, videos and .txt files.
+After creating the AssetCreateForm.js in the frontend, I realized I made a mistake defining the fields in the model, on the backend side. One of the feature of the application is that you can upload as assetfile multi type media like, images, video, and .txt files. At that point my code was able to upload just images. Thanks to the support at code institute I managed to resolve the issue. Sean helped me for more than an hour trying to discover and fix the issue. He discovered also other issues I had with the useState in the frontend and finally landed on the solution. The field type on the Asset model had to be changed to Cloudinary field. That resolved the issue and the user is now able to upload images, videos and .txt files.
 
 After I started to build the Asset form I had the need to include the profile_id, profile_image, and project_owner fields for the Assets. The same happened for the participants end points, where I had to include participants_id and participant_image. So I went back to the backend project and iclude them in the Api. It was more convenient to add those fields in the API than make tons of request to the server from the frontend.
 
 All the time I went back to drf project I made sure to activate the string in the env.py file to activate the ENV variable. That way I had the Django view activated, so it was easy to check the changes I made. After checking the code was working as expected, I commented out the ENV variable, saved, add the changes to git, commited, pushed to github and redeployed to Heroku.
-
-
-## Bugs
 
 Projects and Assets list: Filtering is not implemented in the API. The filtering happens in the frontend using to the filter method. This cause some issues like continously display the loader animation when the filtering doesn't match the filtering criteria. This issue will be solved in the future implementing the filtering in the API.
 
@@ -306,10 +303,9 @@ Database service used: [ElephantSQL](https://www.elephantsql.com/)
 
 ## Credits
 
-I heavily relayed on the walkthrough project lessons and that was mostly what i used.
-Although the following resources were used
+I heavily relayed on the walkthrough project lessons. Although the following resources were used
 
-- How to test the Asset list in automated test is [how to test a model that has a foreign key in django](https://stackoverflow.com/questions/44604686/how-to-test-a-model-that-has-a-foreign-key-in-django)
+- *How to test the Asset list in automated test* can be found [here](https://stackoverflow.com/questions/44604686/how-to-test-a-model-that-has-a-foreign-key-in-django)
 
 - [Django Rest Framework documentation](https://www.django-rest-framework.org/)
 
