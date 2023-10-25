@@ -12,7 +12,7 @@ class Profile(models.Model):
     content = models.TextField(blank=True)
     role = models.CharField(max_length=32, blank=True)
     image = models.ImageField(
-        upload_to='images/', default='../default_profile_zsapif'
+        upload_to='images/', default='../default_profile_zsapif',
     )
 
     class Meta:

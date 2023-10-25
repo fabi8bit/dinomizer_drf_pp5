@@ -20,7 +20,7 @@ class Asset(models.Model):
         max_length=32, choices=category_choices, default='other')
     description = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to='images/', default='../default_asset_img_dwjzkq', blank=True
+        upload_to='images/', default='../default_asset_img_dwjzkq',
     )
     assetfile = CloudinaryField(
         "Asset",
