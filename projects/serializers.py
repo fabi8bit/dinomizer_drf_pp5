@@ -13,7 +13,6 @@ class ProjectSerializer(serializers.ModelSerializer):
     participants = serializers.SerializerMethodField()
 
     def get_participants(self, obj):
-        # Book.objects.filter(publisher__name="BaloneyPress").count()
         participants = Participant.objects.filter(
             project_id=obj.id).count()
         return participants

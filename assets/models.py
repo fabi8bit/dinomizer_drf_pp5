@@ -24,7 +24,7 @@ class Asset(models.Model):
     )
     assetfile = CloudinaryField(
         "Asset",
-        resource_type="auto",  # <= Options: image, video, raw, auto
+        resource_type="auto", null=True, # <= Options: image, video, raw, auto
     )
     project_id = models.ForeignKey(
         Project,
