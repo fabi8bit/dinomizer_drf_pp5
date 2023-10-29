@@ -38,8 +38,8 @@ DEBUG = 'DEBUG' in os.environ
 ALLOWED_HOSTS = [
     '8000-fabi8bit-dinomizerdrfpp-lj287mt52d5.ws-eu104.gitpod.io',
     '8000-fabi8bit-dinomizerdrfpp-lj287mt52d5.ws-eu105.gitpod.io',
-    '3000-fabi8bit-dinomizerreact-urps9b7jf4q.ws-eu105.gitpod.io/',
-    '3000-fabi8bit-dinomizerreact-2hx782bo1fa.ws-eu105.gitpod.io/',
+    '3000-fabi8bit-dinomizerreact-urps9b7jf4q.ws-eu105.gitpod.io',
+    '3000-fabi8bit-dinomizerreact-2hx782bo1fa.ws-eu105.gitpod.io',
     os.environ.get('ALLOWED_HOST'),
     ]
 
