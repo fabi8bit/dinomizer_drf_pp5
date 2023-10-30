@@ -18,18 +18,18 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
 - [Dinomizer](#Dinomizer-logo)
   * [Project goals](#project-goals)
   * [Table of contents](#table-of-contents)
-  * [Planning and ideas](#planning)
+  * [Planning and ideas](#planning-and-ideas)
   * [API endpoints](#api-endpoints)
-    + [**Data models**](#data-models)
-      - [Profile]()
-      - [Project]()
-      - [Asset](#--event--)
-      - [Participant](#--notification--)
-      - [Checks](#--contact--)
+    + [Data Models](#data-models)
+      - [Profile](#profile)
+      - [Project](#project)
+      - [Asset](#asset)
+      - [Participant](#participant)
+      - [Checks](#checks)
 
   * [Permissions](#permissions)
   
-  * [Frameworks, libraries and dependencies](#frameworks--libraries-and-dependencies)
+  * [Frameworks, libraries and dependencies](#frameworks-libraries-and-dependencies)
     + [django-cloudinary-storage](#django-cloudinary-storage)
     + [dj-rest-auth](#dj-rest-auth)
     + [djangorestframework-simplejwt](#djangorestframework-simplejwt)
@@ -37,18 +37,18 @@ Dinomizer is a web application designed to assist Creative Agencies with teams d
     + [psychopg2](#psychopg2)
     + [django-cors-headers](#django-cors-headers)
   * [Testing](#testing)
-    + [Automated tests](#automated-tests)
+    + [Automated tests](#automated-test)
     + [Manual testing](#manual-testing)
-  * [Bugs and Issues](#resolved-bugs)
+  * [Bugs and Issues](#bugs)
   * [Python validation](#python-validation)
   * [Deployment](#deployment)
   * [Credits](#credits)
   * [Notes](#notes)
 
 ## Planning and ideas
-Dinomizer is based on the walkthrough project of the Code Institute Frontend module. The idea comes from my background experience in video production and comunication. I've immagined a comunication agency where all the members working on the same comunication project are dispersed in different physical places. They need to be on the same page and share all the contents they are working on. Dinomizer is the platform where they can share files, assets and ideas to carry out projects.
-As a first step for the planning I streamlined all the project goals and tried to immagine all the possible user stories for the frontend application. Those are described in details in the [README](https://github.com/fabi8bit/dinomizer_react_pp5/blob/main/README.md) of the frontend application.
-In order to support the user stories, and therefore the functionality of the application, I started to lay down the API endpoints and data models.
+Dinomizer is inspired by the Code Institute Frontend module's walkthrough project. It was conceptualized based on my background in video production and communication. I envisioned a communication agency where team members are located in different physical locations but need to collaborate effectively on communication projects. Dinomizer serves as the platform where these dispersed teams can easily share files, assets, and ideas to successfully execute their projects.
+To begin the planning process, I first streamlined all the project objectives and meticulously crafted various user stories for the frontend application. These user stories are comprehensively detailed in the [README](https://github.com/fabi8bit/dinomizer_react_pp5/blob/main/README.md) of the frontend application.
+To support these user stories and the overall functionality of the application, I initiated the development of API endpoints and data models.
 
 ## API Endpoints
 
@@ -171,7 +171,7 @@ A Django App that adds Cross-Origin Resource Sharing (CORS) headers to responses
 ## Testing
 
 ### Automated Test
-A total of 22 unit test were carried out on the following apps: Projects, Participants, Assets, and Checks. They are all reported on the following chart:
+A total of 22 unit test were carried out on the following apps: Projects, Participants, Assets, and Checks. They are all reported on the following chart or can be seen as spreadsheet format at [this link](https://docs.google.com/spreadsheets/d/1dO9Zj2uhU90JMJT0_W85nkQjaKAbOLGk1Hr0KajRhKQ/edit#gid=1557896774).
 | Application  | Test                                                                                      | Type | Results | File                  | Class                      | Note                                                                                                                    |
 | ------------ | ----------------------------------------------------------------------------------------- | ---- | ------- | --------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | PROJECTS     | Logged In User can list all the projects                                                  | auto | pass    | projects/tests.py     | ProjectListViewTests       |                                                                                                                         |
@@ -206,14 +206,18 @@ Each API end point were manually tested using the Django Rest Framework HTML int
 
 During the planning of the application I decided to skip the search feature for projects. It was only during the coding of the project page on the frontend, that I had the need to implement the search function also for projects in order to have a better user experience.
 So I had to go back and implement this feature in the backend project (commit d5f3dae https://github.com/fabi8bit/dinomizer_drf_pp5/commit/d5f3dae0e09241c17670ea45e4f573d8e00b6237)
+***
 
 After creating the AssetCreateForm.js in the frontend, I realized I made a mistake defining the fields in the model, on the backend side. One of the feature of the application is that you can upload as assetfile multi type media like, images, video, and .txt files. At that point my code was able to upload just images. Thanks to the support at code institute I managed to resolve the issue. Sean helped me for more than an hour trying to discover and fix the issue. He discovered also other issues I had with the useState in the frontend and finally landed on the solution. The field type on the Asset model had to be changed to Cloudinary field. That resolved the issue and the user is now able to upload images, videos and .txt files.
+***
 
 After I started to build the Asset form I had the need to include the profile_id, profile_image, and project_owner fields for the Assets. The same happened for the participants end points, where I had to include participants_id and participant_image. So I went back to the backend project and iclude them in the Api. It was more convenient to add those fields in the API than make tons of request to the server from the frontend.
 
 All the time I went back to drf project I made sure to activate the string in the env.py file to activate the ENV variable. That way I had the Django view activated, so it was easy to check the changes I made. After checking the code was working as expected, I commented out the ENV variable, saved, add the changes to git, commited, pushed to github and redeployed to Heroku.
+***
 
 Projects and Assets list: Filtering is not implemented in the API. The filtering happens in the frontend using to the filter method. This cause some issues like continously display the loader animation when the filtering doesn't match the filtering criteria. This issue will be solved in the future implementing the filtering in the API.
+***
 
 Projects and Assets edit form: reselecting cover immage and assetfile(only for asset) is necessary. Without doing so the field remains empty and an Alert Message is rendered to the user. In the backend everything works as expected and this issue is only present in the frontend.
 
